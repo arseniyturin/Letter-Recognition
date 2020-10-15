@@ -1,3 +1,5 @@
+# Handwritten Letter Recognition
+
 ## Importing Libraries
 
 
@@ -190,11 +192,25 @@ model.save('model.h5')
 ## Exporting to TensorflowJS
 
 Converter will create `model.json` and `group1-shard1of1.bin` files
-> pip install tensorflowjs> tensorflowjs_converter --input_format=keras --output_format=tfjs_layers_model ./model.h5 ./www/
+
+
+```python
+# pip install tensorflowjs
+```
+
+
+```python
+# tensorflowjs_converter --input_format=keras --output_format=tfjs_layers_model ./model.h5 ./www/
+```
+
 ## Load TensorflowJS
+
+
+```python
 const model = null;
 async function loadModel() {
     model = await tf.loadLayersModel('./model.json');
 }
 
 loadModel();
+```
