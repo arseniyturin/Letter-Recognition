@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<title>Arseny Turin - Projects</title>
+	<meta name="description" content="Data Science, Machine Learning, AI, Tensorflow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="./favicon.ico" sizes="32x32">
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+	<script src="./draw.js"></script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: arial;
+			color: #333;
+		}
+		#go, #clear {
+			width: 100px;
+			height: 24px;
+			background-color: #f0f0f0;
+		}
+		#canvasWrap {
+			width: 112px;
+			heigth: 112px;
+			border: 1px #333 solid;
+		}
+		#canvas {
+			display: block;
+			width: 112px;
+			height: 112px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="canvasWrap"><canvas id="canvas"></canvas></div>
+	<div id="go">GO</div>
+	<div id="clear">CLEAR</div>
+	<div id="result"></div>
+</body>
+
+<script>
+	let model = null;
+	async function loadModel() {
+		model = await tf.loadLayersModel('./model.json');
+	}
+	loadModel();
+	draw("canvas");
+</script>
+</html>
