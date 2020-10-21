@@ -81,7 +81,7 @@ class letterRecognition {
 		this.coord.y = event.touches[0].clientY - this.canvas.offsetTop + window.pageYOffset;
 	}
 
-	// Get touch coordinates
+	// Activate drawign with finger
 	touchstart(event) {
 		event.preventDefault();
 		this.getMobilePosition(event);
@@ -98,7 +98,7 @@ class letterRecognition {
 		this.context.closePath();
 	}
 
-	// Activate drawing
+	// Activate drawing with mouse
 	mousedown() {
 		this.getPosition(event);
 		this.draw = true;
