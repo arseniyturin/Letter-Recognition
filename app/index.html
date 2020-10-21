@@ -5,17 +5,24 @@
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
-	<title>Arseny Turin - Projects</title>
+	<title>Letter Recognition with TensorflowJS</title>
 	<meta name="description" content="Data Science, Machine Learning, AI, Tensorflow">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="./favicon.ico" sizes="32x32">
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
 	<script src="./script.js"></script>
 	<script>
-		window.addEventListener('load', () => { this.ai = new letterRecognition('canvas') });
-		let model = null;
-		async function loadModel() { model = await tf.loadLayersModel('./model.json') }
+		// Wait for the document to load
+		window.addEventListener('load', () => {
+			// Make ai object accessible from the console
+			this.ai = new letterRecognition('canvas');
+		});
+		// Model placeholder
+		let model = undefined;
+		// Loading model
+		async function loadModel() {
+			model = await tf.loadLayersModel('./model.json');
+		}
 		loadModel();
 	</script>
 	<style>
@@ -23,30 +30,57 @@
 			margin: 0;
 			padding: 0;
 			font-family: arial;
-			color: #333;
+			color: #444;
+			font-size: 13px;
+		}
+		#content {
+			width: 300px;
+			margin: 50px auto;
+			text-align: center;
 		}
 		#go, #clear {
 			width: 100px;
-			height: 24px;
 			background-color: #f0f0f0;
+			cursor: pointer;
+			margin: 4px auto;
+			text-align: center;
+			padding: 7px 0 6px;
+			border-radius: 5px;
+		}
+		#go:hover, #clear:hover {
+			background-color: #f0e0f0;
+		}
+		#go:active, #clear:active {
+			background-color: #e5c4e5;
 		}
 		#canvasWrap {
 			width: 112px;
-			heigth: 112px;
-			border: 1px #333 solid;
+			height: 112px;
+			border: 1px #888 solid;
+			margin: 10px auto;
+		}
+		#canvasWrap:hover {
+			border: 1px #666 solid;
 		}
 		#canvas {
 			display: block;
 			width: 112px;
 			height: 112px;
 		}
+		#result {
+			font-size: 84px;
+		}
 	</style>
 </head>
 
 <body>
-	<div id="canvasWrap"><canvas id="canvas"></canvas></div>
-	<div id="go">GO</div>
-	<div id="clear">CLEAR</div>
-	<div id="result"></div>
+	<div id="content">
+		<h1>Letter Recognition</h1>
+		<p>Powered by TensorflowJS</p>
+		<div id="canvasWrap"><canvas id="canvas"></canvas></div>
+		<div id="go">GO</div>
+		<div id="clear">CLEAR</div>
+		<div id="result">?</div>
+</div>
 </body>
 </html>
