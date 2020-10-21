@@ -122,6 +122,16 @@ class letterRecognition {
 
 	// Predicting letter
 	predict() {
+
+		/*
+
+			1. Transfer canvas to image
+			2. Rescale image and place it to smaller (28x28) canvas
+			3. Pull image data from smaller canvas
+			4. 
+
+		*/
+
 		// '?' -> '*'
 		this.result.innerText = '*';
 		// Temorary arrays for processing data
@@ -132,6 +142,9 @@ class letterRecognition {
 		originalImage.src = this.canvas.toDataURL();
 		originalImage.addEventListener('load', transform.bind(this));
 
+		// Because our model is trained on images 28x28
+		// first we have to rescale drawing and transform it
+		// into tensor with (28, 28, 1) shape
 		function transform() {
 
 			// This method scale image from 112x112 to 28x28

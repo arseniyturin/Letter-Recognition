@@ -11,7 +11,13 @@
 	<link rel="icon" href="./favicon.ico" sizes="32x32">
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
-	<script src="./draw.js"></script>
+	<script src="./script.js"></script>
+	<script>
+		window.addEventListener('load', () => { this.ai = new letterRecognition('canvas') });
+		let model = null;
+		async function loadModel() { model = await tf.loadLayersModel('./model.json') }
+		loadModel();
+	</script>
 	<style>
 		body {
 			margin: 0;
@@ -43,13 +49,4 @@
 	<div id="clear">CLEAR</div>
 	<div id="result"></div>
 </body>
-
-<script>
-	let model = null;
-	async function loadModel() {
-		model = await tf.loadLayersModel('./model.json');
-	}
-	loadModel();
-	draw("canvas");
-</script>
 </html>
