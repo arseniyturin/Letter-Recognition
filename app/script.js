@@ -123,13 +123,15 @@ class letterRecognition {
 	// Predicting letter
 	predict() {
 
-		/*
-
-			1. Transfer canvas to image
-			2. Rescale image and place it to smaller (28x28) canvas
-			3. Pull image data from smaller canvas
-			4. 
-
+		/**
+		1. Preprocessing. Canvas returns RGBA image of 112 x 112 px, which in fact is
+		   1d array with (50176,) shape, because 112 * 112 * 4 = 50176. Our model input is a
+			 tensor with shape (28, 28, 1). Hence first we must rescale and reshape
+			 image to use it in the model. This achieved by using .drawImage() on hidden
+			 smaller canvas' context and several array manipulations.
+		2. Model predict.
+		3. Return result back to the webpage along with predicted classes to the console
+		   for analysis and debugging purpose.
 		*/
 
 		// '?' -> '*'
@@ -137,10 +139,10 @@ class letterRecognition {
 		// Temorary arrays for processing data
 		let one_d = [];
 		let two_d = [];
-		let originalImage = new Image();
+		let canvasImg = new Image();
 
-		originalImage.src = this.canvas.toDataURL();
-		originalImage.addEventListener('load', transform.bind(this));
+		canvasImg.src = this.canvas.toDataURL();
+		canvasImg.addEventListener('load', transform.bind(this));
 
 		// Because our model is trained on images 28x28
 		// first we have to rescale drawing and transform it
@@ -148,13 +150,15 @@ class letterRecognition {
 		function transform() {
 
 			// This method scale image from 112x112 to 28x28
-			this.smallContext.drawImage(originalImage, 0, 0, this.canvas.width, this.canvas.height, 0, 0, this.smallCanvas.width, this.smallCanvas.height);
+			// Because we can't use .drawImage directly on Canvas
+			// we create Image and use it as an input.
+			this.smallContext.drawImage(canvasImg, 0, 0, this.canvas.width, this.canvas.height, 0, 0, this.smallCanvas.width, this.smallCanvas.height);
 
 			// Retrieve small image in form of array. Initial shape is (3136,)
-			let imageArray = this.smallContext.getImageData(0, 0, 28, 28).data;
+			let smallCanvasData = this.smallContext.getImageData(0, 0, 28, 28).data;
 
 			// Pulling every 4th element from initial array.
-			for (let i = 3; i <= imageArray.length; i+=4) { one_d.push(imageArray[i]); }
+			for (let i = 3; i <= smallCanvasData.length; i+=4) { one_d.push(smallCanvasData[i]); }
 
 			// Transforming (784,) => (28,28)
 			for (let i = 0; i < one_d.length; i+=28) { two_d.push(one_d.slice(i, i+28)); }
