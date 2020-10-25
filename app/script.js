@@ -125,13 +125,13 @@ class letterRecognition {
 
 		/**
 		1. Preprocessing. Canvas returns RGBA image of 112 x 112 px, which in fact is
-			1d array with (50176,) shape, because 112 * 112 * 4 = 50176. Our model input is a
-			tensor with shape (28, 28, 1). Hence first we must rescale and reshape
-			image to use it in the model. This achieved by using .drawImage() on hidden
-			smaller canvas' context and several array manipulations.
+		1d array with (50176,) shape, because 112 * 112 * 4 = 50176. Our model input is a
+		tensor with shape (28, 28, 1). Hence first we must rescale and reshape
+		image to use it in the model. This achieved by using .drawImage() on hidden
+		smaller canvas' context and several array manipulations.
 		2. Model predict.
 		3. Return result back to the webpage along with predicted classes to the console
-			for analysis and debugging purpose.
+		for analysis and debugging purpose.
 		*/
 
 		// '?' -> '*'
